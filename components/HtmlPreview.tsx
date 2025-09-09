@@ -74,7 +74,7 @@ export function HtmlPreview({ code }: HtmlPreviewProps) {
               return React.createElement(
                 "table",
                 attribs,
-                domToReact(element.children, {
+                domToReact(element.children as DOMNode[], {
                   replace: (childNode: DOMNode) => {
                     if (childNode.type === "tag") {
                       const childElement = childNode as Element;
@@ -96,7 +96,7 @@ export function HtmlPreview({ code }: HtmlPreviewProps) {
                         return React.createElement(
                           childElement.name,
                           childAttribs,
-                          domToReact(childElement.children)
+                          domToReact(childElement.children as DOMNode[])
                         );
                       }
                       
@@ -115,7 +115,7 @@ export function HtmlPreview({ code }: HtmlPreviewProps) {
                         return React.createElement(
                           childElement.name,
                           childAttribs,
-                          domToReact(childElement.children)
+                          domToReact(childElement.children as DOMNode[])
                         );
                       }
                     }
@@ -135,7 +135,7 @@ export function HtmlPreview({ code }: HtmlPreviewProps) {
               return React.createElement(
                 element.name,
                 attribs,
-                domToReact(element.children)
+                domToReact(element.children as DOMNode[])
               );
             }
           }

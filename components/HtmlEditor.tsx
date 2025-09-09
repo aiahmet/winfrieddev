@@ -2,7 +2,8 @@
 
 import React, { useState, useEffect } from "react";
 import Editor from "@monaco-editor/react";
-import { Alert, AlertDescription } from "@/components/ui/alert";
+import { editor } from 'monaco-editor';
+import { Alert, AlertDescription } from "./ui/alert";
 import { Info } from "lucide-react";
 
 interface HtmlEditorProps {
@@ -75,7 +76,38 @@ export function HtmlEditor({
   }, [value, onValidationError]);
 
   // Monaco editor configuration for HTML table editing
-  const editorOptions = {
+  const editorOptions: {
+    minimap: { enabled: boolean };
+    fontSize: number;
+    scrollBeyondLastLine: boolean;
+    automaticLayout: boolean;
+    wordWrap: "off" | "on" | "wordWrapColumn" | "bounded" | undefined;
+    wrappingStrategy: "advanced" | "simple" | undefined;
+    lineNumbers: editor.LineNumbersType | undefined;
+    renderLineHighlight: "none" | "line" | "all" | "gutter" | undefined;
+    smoothScrolling: boolean;
+    tabSize: number;
+    insertSpaces: boolean;
+    accessibilitySupport: "off" | "auto" | "on" | undefined;
+    ariaLabel: string;
+    screenReaderAnnounceInlineSuggestion: boolean;
+    autoClosingBrackets: editor.EditorAutoClosingStrategy | undefined;
+    autoClosingQuotes: editor.EditorAutoClosingStrategy | undefined;
+    autoIndent: "none" | "advanced" | "full" | "keep" | "brackets" | undefined;
+    formatOnPaste: boolean;
+    formatOnType: boolean;
+    suggestOnTriggerCharacters: boolean;
+    acceptSuggestionOnCommitCharacter: boolean;
+    acceptSuggestionOnEnter: "off" | "on" | "smart" | undefined;
+    quickSuggestions: {
+      other: boolean;
+      comments: boolean;
+      strings: boolean;
+    };
+    parameterHints: {
+      enabled: boolean;
+    };
+  } = {
     minimap: { enabled: false },
     fontSize: 14,
     scrollBeyondLastLine: false,
@@ -83,17 +115,17 @@ export function HtmlEditor({
     wordWrap: "on",
     wrappingStrategy: "advanced",
     lineNumbers: "on" as const,
-    renderLineHighlight: "all",
+    renderLineHighlight: "line",
     smoothScrolling: true,
     tabSize: 2,
     insertSpaces: true,
-    accessibilitySupport: "on",
+    accessibilitySupport: "auto",
     ariaLabel: "HTML Code Editor",
     screenReaderAnnounceInlineSuggestion: true,
     // HTML-specific settings
     autoClosingBrackets: "always",
     autoClosingQuotes: "always",
-    autoIndent: "full",
+    autoIndent: "advanced",
     formatOnPaste: true,
     formatOnType: true,
     suggestOnTriggerCharacters: true,

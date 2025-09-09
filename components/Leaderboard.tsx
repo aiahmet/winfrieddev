@@ -22,28 +22,6 @@ export function Leaderboard({ currentUser }: LeaderboardProps) {
   const [leaderboard, setLeaderboard] = useState<LeaderboardEntry[]>([]);
   const [showDialog, setShowDialog] = useState(false);
 
-  // Load leaderboard from localStorage
-  useEffect(() => {
-    const loadLeaderboard = () => {
-      try {
-        const saved = localStorage.getItem('html-tables-leaderboard');
-        if (saved) {
-          const parsed = JSON.parse(saved);
-          setLeaderboard(parsed);
-        }
-      } catch (error) {
-        console.error('Failed to load leaderboard:', error);
-      }
-    };
-
-    loadLeaderboard();
-
-    // Update leaderboard when current user changes
-    if (currentUser) {
-      updateLeaderboard(currentUser);
-    }
-  }, [currentUser, updateLeaderboard]);
-
   const updateLeaderboard = useCallback((user: typeof currentUser) => {
     if (!user) return;
 
@@ -71,6 +49,28 @@ export function Leaderboard({ currentUser }: LeaderboardProps) {
       return top10;
     });
   }, []);
+
+  // Load leaderboard from localStorage
+  useEffect(() => {
+    const loadLeaderboard = () => {
+      try {
+        const saved = localStorage.getItem('html-tables-leaderboard');
+        if (saved) {
+          const parsed = JSON.parse(saved);
+          setLeaderboard(parsed);
+        }
+      } catch (error) {
+        console.error('Failed to load leaderboard:', error);
+      }
+    };
+
+    loadLeaderboard();
+
+    // Update leaderboard when current user changes
+    if (currentUser) {
+      updateLeaderboard(currentUser);
+    }
+  }, [currentUser, updateLeaderboard]);
 
   const getRankIcon = (rank: number) => {
     switch (rank) {

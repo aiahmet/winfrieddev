@@ -17,8 +17,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
-import { Badge } from "@/components/ui/badge";
-import { Trophy, Star, Flame } from "lucide-react";
+import { Trophy } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
 interface ProgressData {

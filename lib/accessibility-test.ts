@@ -1,10 +1,10 @@
-import axe from 'axe-core';
+import * as axe from 'axe-core';
 
 export interface AccessibilityResult {
-  violations: axe.Result[];
-  passes: axe.Result[];
-  incomplete: axe.Result[];
-  inapplicable: axe.Result[];
+  violations: unknown[];
+  passes: unknown[];
+  incomplete: unknown[];
+  inapplicable: unknown[];
 }
 
 /**
@@ -18,15 +18,16 @@ export async function runAccessibilityTest(
   rules?: string[]
 ): Promise<AccessibilityResult> {
   return new Promise((resolve, reject) => {
-    const config: axe.RunOptions = {
+    const config: Record<string, unknown> = {
       rules: rules ? { [rules.join(',')]: { enabled: true } } : undefined,
     };
 
-    axe.run(element, config, (err, results) => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    (axe as any).run(element, config, (err: unknown, results: unknown) => {
       if (err) {
         reject(err);
       } else {
-        resolve(results);
+        resolve(results as AccessibilityResult);
       }
     });
   });
@@ -80,14 +81,16 @@ export function logAccessibilityViolations(results: AccessibilityResult): void {
 
   if (results.violations.length > 0) {
     console.error(`❌ ${results.violations.length} violations found:`);
-    results.violations.forEach((violation, index) => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    results.violations.forEach((violation: any, index) => {
       console.error(`${index + 1}. ${violation.id}: ${violation.description}`);
       console.error(`   Impact: ${violation.impact}`);
       console.error(`   Help: ${violation.help}`);
       console.error(`   Help URL: ${violation.helpUrl}`);
       if (violation.nodes.length > 0) {
         console.error(`   Affected elements: ${violation.nodes.length}`);
-        violation.nodes.forEach((node, nodeIndex) => {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        violation.nodes.forEach((node: any, nodeIndex: number) => {
           console.error(`     ${nodeIndex + 1}. ${node.target.join(', ')}`);
         });
       }

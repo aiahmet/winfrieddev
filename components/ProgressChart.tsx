@@ -1,6 +1,5 @@
 "use client";
 
-import { useRef } from 'react';
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -27,7 +26,6 @@ interface ProgressChartProps {
 }
 
 export function ProgressChart({ attempts, completedExercises }: ProgressChartProps) {
-  const chartRef = useRef<ChartJS>(null);
 
   const data = {
     labels: ['Exercise 1', 'Exercise 2', 'Exercise 3', 'Exercise 4'],
@@ -77,7 +75,7 @@ export function ProgressChart({ attempts, completedExercises }: ProgressChartPro
 
   return (
     <div className="w-full">
-      <Bar ref={chartRef} data={data} options={options} />
+      <Bar data={data} options={options} />
     </div>
   );
 }
